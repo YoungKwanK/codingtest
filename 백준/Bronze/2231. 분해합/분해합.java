@@ -1,29 +1,29 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
-public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        int N = sc.nextInt();
-        int result = 0;
+        // 자연수 N 받기
+        int N =Integer.parseInt(br.readLine());
+        br.close();
 
-        // 생성자는 최대 N보다 작음
-        for (int i = 1; i < N; i++) {
+        int result=0;
+
+        // 1 ~ N 자리수 더하기
+        for(int i=2; i<N; i++) {
             int sum = i;
-            int temp = i;
-
-            // 각 자리수를 더함
-            while (temp != 0) {
-                sum += temp % 10;
-                temp /= 10;
+            //자리수 값 구하기
+            for (int j=i; j>0; j=j/10) {
+                sum+=j%10;
             }
-
-            if (sum == N) {
-                result = i;
-                break; // 가장 작은 생성자만 출력해야 하므로 break
+            if(sum==N){
+                result=i;
+                break;
             }
         }
-
         System.out.println(result);
     }
 }
