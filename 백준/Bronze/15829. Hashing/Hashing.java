@@ -1,34 +1,25 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Scanner;
-import java.util.StringTokenizer;
 
-class Main {
+public class Main {
     public static void main(String[] args) throws IOException {
+        final int r = 31;
+        final int M = 1234567891;
+
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        
-        // 문자열 L 입력
-        StringTokenizer st1 = new StringTokenizer(br.readLine());
-        int L = Integer.parseInt(st1.nextToken());
+        int L = Integer.parseInt(br.readLine());
+        String str = br.readLine();
 
-        // 문자열 입력
-        StringTokenizer st2 = new StringTokenizer(br.readLine());
-        String st2String = st2.nextToken();
-        char[] stringArr = new char[L];
-        for(int i=0; i<L; i++) {
-            stringArr[i] = st2String.charAt(i);
+        long sum = 0;
+        long power = 1;
+
+        for (int i = 0; i < L; i++) {
+            int val = str.charAt(i) - 'a' + 1;
+            sum = (sum + val * power) % M;
+            power = (power * r) % M;
         }
 
-        //
-        int sum=0;
-        for(int i=0; i<L; i++) {
-            for(int j=1; j<=26; j++) {
-                if(stringArr[i]=='a'+j-1) {
-                    sum=(int)(sum+j*Math.pow(31, i));
-                }
-            }
-        }
         System.out.println(sum);
     }
 }
