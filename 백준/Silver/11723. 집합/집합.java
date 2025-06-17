@@ -10,10 +10,10 @@ public class Main{
 		int N = Integer.parseInt(br.readLine());
 		
 		// 명령어를 저장할 List 선언
-		Set<String> set = new HashSet<>();
+		List<String> set = new LinkedList<>();
 		
 		// 1 ~ 20까지 담을 list
-		Set<String> set2 = new HashSet<>();
+		List<String> set2 = new LinkedList<>();
 		for(int i=1; i<=20; i++) {
 			set2.add(String.valueOf(i));
 		}
@@ -41,6 +41,8 @@ public class Main{
 				if(set.contains(command[1])) set.remove(command[1]);
 				else set.add(command[1]);
 			}
+			
+			// 비운 다음에 채워놓기
 			else if(command[0].equals("all")) {
 				set.clear();
 				set.addAll(set2);
