@@ -1,32 +1,34 @@
-import java.io.*;
 import java.util.*;
+import java.io.*;
+public class Main{
 
-public class Main {
-    public static void main(String[] args) throws IOException {
-        // 빠른 입출력을 위한 BufferedReader 사용
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        
+        // 단어의 개수 N
         int N = Integer.parseInt(br.readLine());
-
-        HashSet<String> set = new HashSet<>();
-
-        for (int i = 0; i < N; i++) {
-            set.add(br.readLine());
+        
+        // 단어를 저장할 set 선언
+        Set<String> s = new HashSet<>();
+        
+        for(int i=0; i<N; i++){
+            s.add(br.readLine());
         }
-
-        List<String> list = new ArrayList<>(set);
-
-        // 정렬 기준: 길이 오름차순 → 길이 같으면 사전 순
-        list.sort((s1, s2) -> {
-            if (s1.length() == s2.length()) {
-                return s1.compareTo(s2);
-            } else {
-                return Integer.compare(s1.length(), s2.length());
-            }
+        
+        List<String> list = new ArrayList<>(s);
+        
+        list.sort((o1, o2)-> {
+           if(o1.length()!=o2.length()){
+               return o1.length()-o2.length();
+           } 
+           else{
+               return o1.compareTo(o2);
+           }
         });
-
-        // 출력
-        for (String s : list) {
-            System.out.println(s);
+        
+        for(int i=0; i<list.size(); i++){
+            System.out.println(list.get(i));
         }
-    }
+	}
+	
 }
