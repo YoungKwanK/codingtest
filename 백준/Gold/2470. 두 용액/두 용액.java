@@ -20,7 +20,12 @@ public class Main{
 		
 		// 정렬
 		Arrays.sort(liq);
-
+		
+		// 모두 산성
+		if(liq[0]>0) System.out.println(liq[0]+" "+liq[1]);
+		// 모두 알칼리성
+		else if(liq[liq.length-1]<0) System.out.println(liq[liq.length-2]+ " "+liq[liq.length-1]);
+		else {
 			int start=0;
 			int end = liq.length-1;
 			int[] answer = {liq[start], liq[end]};
@@ -43,4 +48,6 @@ public class Main{
 			}
 			System.out.println(answer[0]+ " "+ answer[1]);
 		}
+		
+	}
 }
