@@ -1,38 +1,30 @@
-import java.util.*;
-import java.io.*;
-public class Main{
 
-	public static void main(String[] args) throws IOException{
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
-		// N
-//		P1 IOI
-//		P2 IOIOI
-//		P3 IOIOIOI
-//		PN IOIOI...OI (O가 N개)
-		int N = Integer.parseInt(br.readLine());
-		// 문자열 길이 M
-		int M = Integer.parseInt(br.readLine());
-		// 문자열을 받아 문자 배열로 변환
-		char[] S = br.readLine().toCharArray(); 
-		
-		// 초기 P
-		StringBuilder P = new StringBuilder("IOI");
-		// N-1만큼 O와 I를 추가
-		int answer=0;
-		for(int i=0; i<N-1; i++) {
-			P.append("O").append("I");
-		}
-		
-		// 인덱스마다 있는 지 확인
-		for(int i=0; i<S.length-P.length()+1; i++) {
-			StringBuilder temp=new StringBuilder();
-			for(int j=0; j<P.length(); j++) {
-				temp.append(S[i+j]);
-			}
-			if(P.toString().equals(temp.toString())) answer++;
-		}
-		
-		System.out.println(answer);
-	}
+import java.io.*;
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(br.readLine()); // IOI가 N개 반복
+        int M = Integer.parseInt(br.readLine()); // 문자열 길이
+        String S = br.readLine(); // 문자열
+
+        int answer = 0;
+        int count = 0;
+
+        for (int i = 1; i < M - 1; ) {
+            if (S.charAt(i - 1) == 'I' && S.charAt(i) == 'O' && S.charAt(i + 1) == 'I') {
+                count++;
+                if (count == N) {
+                    answer++;
+                    count--; // 겹치는 경우를 위해 1 줄임 (앞의 I를 다시 활용)
+                }
+                i += 2;
+            } else {
+                count = 0; // 끊기면 초기화
+                i++;
+            }
+        }
+
+        System.out.println(answer);
+    }
 }
