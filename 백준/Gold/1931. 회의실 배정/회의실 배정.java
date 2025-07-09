@@ -1,4 +1,3 @@
-
 import java.util.*;
 import java.io.*;
 public class Main{
@@ -21,7 +20,7 @@ public class Main{
 		// 끝나는 시간을 기준으로 정렬, 같을 경우 시작 시간이 빠른 순으로 정렬
 		Arrays.sort(time, (o1, o2) -> {
 			if(o1[1]==o2[1]) {
-				return o1[0]-o2[1];
+				return o1[0]-o2[0];
 			}
 			else return o1[1] - o2[1];
 		});
