@@ -1,40 +1,35 @@
 
 import java.util.*;
 import java.io.*;
-public class Main{
-
-	public static void main(String[] args) throws IOException{
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
-		// 듣도못한 사람 N, 보도 못한 사람 수 M
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		int N = Integer.parseInt(st.nextToken());
-		int M = Integer.parseInt(st.nextToken());
-		
-		// 듣도못한 사람과 보도 못한 사람 수 저장할 set 선언
-		Set <String> p1 = new TreeSet<>();
-		Set <String> p2 = new TreeSet<>();
-		
-		// 듣도못한 사람 받기
-		for(int i=0; i<N; i++) {
-			p1.add(br.readLine());
-		}
-		// 보도못한 사람 받기
-		for(int i=0; i<M; i++) {
-			p2.add(br.readLine());
-		}
-		
-		StringBuilder sb = new StringBuilder();
-		int count=0;
-		
-		for(String s : p1) {
-			if(p2.contains(s)) {
-				count++;
-				sb.append(s).append("\n");
-			}
-		}
-		System.out.println(count);
-		System.out.println(sb);
-	}
-	
+public class Main {
+    public static void main(String[] args) throws IOException {
+    	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    	StringTokenizer st;
+    	
+    	// 듣도 못한 수 N, 보도 못한 수 M
+    	st = new StringTokenizer(br.readLine());
+    	int N = Integer.parseInt(st.nextToken());
+    	int M = Integer.parseInt(st.nextToken());
+    	
+    	// 이름을 저장할 맵 선언
+    	Map<String, Integer> people = new TreeMap<>();
+    	
+    	// 이름 넣기
+    	for(int i=0; i<N+M; i++) {
+    		String name = br.readLine();
+    		people.put(name, people.getOrDefault(name, 0)+1);
+    	}
+    	
+    	int result=0;
+    	StringBuilder sb = new StringBuilder();
+    	for(String name : people.keySet()) {
+    		if(people.get(name)==2) {
+    			result++;
+    			sb.append(name).append("\n");
+    		}	
+    	}
+    	
+    	System.out.println(result);
+    	System.out.println(sb);
+    }
 }
