@@ -1,30 +1,31 @@
 
 import java.util.*;
 import java.io.*;
-public class Main{
 
-	public static void main(String[] args) throws IOException{
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
-		// 연산의 개수 N
-		int N = Integer.parseInt(br.readLine());
-		
-		// 값을 저장할 priorityQueue 선언
-		Queue<Integer> pq = new PriorityQueue<>();
-		
-		// 연산 반복
-		for(int i=0; i<N; i++) {
-			int temp = Integer.parseInt(br.readLine());
-			// 0이 주어질 때
-			if(temp==0) {
-				if(pq.isEmpty()) {
-					System.out.println(0);
-				}
-				else System.out.println(pq.poll());
-			}
-			// 0이 아닐 때
-			else pq.add(temp);
-		}
-	}
-	
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        
+        // 연산의 수 N
+        int N = Integer.parseInt(br.readLine());
+        
+        // 우선순위 큐 (최소 힙)
+        Queue<Integer> nums = new PriorityQueue<>();
+        
+        for(int i = 0; i < N; i++) {
+            int num = Integer.parseInt(br.readLine());
+            
+            if(num != 0) {
+                // 0이 아니면 추가
+                nums.add(num);
+            } else {
+                // 0이면 가장 작은 값 출력 및 제거
+                if(nums.isEmpty()) {
+                    System.out.println(0);
+                } else {
+                    System.out.println(nums.remove());
+                }
+            }
+        }
+    }
 }
