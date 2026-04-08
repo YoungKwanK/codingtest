@@ -23,10 +23,7 @@ public class Main {
     
     static void rc(int x, int y, int n) {
     	if(n==1) {
-    		if(r==0 && c==0) result=count;
-    		else if(r==0 && c == 1) result=count+1;
-    		else if(r==1 && c == 1) result=count+3;
-    		else  result=count+2;
+    		result=count;
 
     	}
     	else{
