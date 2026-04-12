@@ -1,64 +1,72 @@
-
 import java.util.*;
 import java.io.*;
-
-public class Main {
+public class Main{
+	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
+		StringTokenizer st;
+		
+		// 테스트 케이스의 개수 T
 		int T = Integer.parseInt(br.readLine());
-
-		while (T-- > 0) {
-			char[] commands = br.readLine().toCharArray();
+		
+		loop:while(T-->0) {
+//			명령어 받아 배열에 저장
+			char[] command = br.readLine().toCharArray();
+//			배열의 수
 			int n = Integer.parseInt(br.readLine());
+//			[x1,...,xn]과 같은 형태로 배열에 들어있는 정수
+			List<Integer> answer = new ArrayList<>();
 			String s = br.readLine();
-
-			Deque<Integer> deque = new ArrayDeque<>();
-			s = s.substring(1, s.length() - 1); // [ ] 제거
-
-			if (!s.isEmpty()) {
-				String[] nums = s.split(",");
-				for (String num : nums) {
-					deque.add(Integer.parseInt(num));
+			s = s.substring(1, s.length()-1);
+			// 숫자만 뽑기
+			if(!s.isEmpty()) {
+				String[] temp = s.split(",");
+				for(int i=0; i<temp.length; i++) {
+					answer.add(Integer.parseInt(temp[i]));
 				}
 			}
-
-			boolean reverse = false;
-			boolean error = false;
-
-			for (char cmd : commands) {
-				if (cmd == 'R') {
-					reverse = !reverse;
-				} else if (cmd == 'D') {
-					if (deque.isEmpty()) {
+			// p만큼 반복
+			int R=0;
+			for(int i=0; i<command.length; i++) {
+				// D가 들어올 경우
+				if(command[i]=='D') {
+					// 리스트가 비여 있으면 error
+					if(answer.size()==0) {
 						System.out.println("error");
-						error = true;
-						break;
+						continue loop;
+					// 리스트가 있으면
+					}else {
+						// 정방향일 때 
+						if(R%2==0) answer.remove(0);
+						// 역방향일 때
+						else answer.remove(answer.size()-1);
 					}
-					if (!reverse) deque.pollFirst();
-					else deque.pollLast();
+				}
+				// R이 들어올 경우
+				else {
+					R++;
 				}
 			}
-
-			if (error) continue;
-
 			StringBuilder sb = new StringBuilder();
-			sb.append("[");
-
-			if (!deque.isEmpty()) {
-				if (!reverse) {
-					Iterator<Integer> it = deque.iterator();
-					sb.append(it.next());
-					while (it.hasNext()) sb.append(",").append(it.next());
-				} else {
-					Iterator<Integer> it = deque.descendingIterator();
-					sb.append(it.next());
-					while (it.hasNext()) sb.append(",").append(it.next());
+			if(answer.size()!=0) {
+				if(R%2==0) {
+					sb.append("[").append(answer.get(0));
+					for(int j=1; j<answer.size(); j++) {
+						sb.append(",").append(answer.get(j));
+					}
+					sb.append("]");
+				}
+				else {
+					sb.append("[").append(answer.get(answer.size()-1));
+					for(int j=1; j<answer.size(); j++) {
+						sb.append(",").append(answer.get(answer.size()-1-j));
+					}
+					sb.append("]");
 				}
 			}
-
-			sb.append("]");
+			else sb.append("[").append("]");
 			System.out.println(sb);
 		}
+		
 	}
 }
