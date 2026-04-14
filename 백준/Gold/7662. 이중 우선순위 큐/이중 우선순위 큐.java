@@ -1,4 +1,3 @@
-
 import java.util.*;
 import java.io.*;
 public class Main{
@@ -12,10 +11,9 @@ public class Main{
 		int T = Integer.parseInt(br.readLine());
 		
 		while(T-->0) {
-			// Q에 적용할 연산의 개수를 나타내는 정수 k (k ≤ 1,000,000)
 			int k = Integer.parseInt(br.readLine());
 			
-			// 테이블 정의, 숫자 : 갯수
+			// 순서가 있는 Map 
 			TreeMap<Integer, Integer> tm = new TreeMap<>();
 			
 			// 연산의 수만큼 반복
@@ -24,21 +22,21 @@ public class Main{
 				// 연산을 문자로 변환
 				char c = st.nextToken().charAt(0);
 				int num = Integer.parseInt(st.nextToken());
+				// I면 추가
 				if(c=='I') {
 					tm.put(num, tm.getOrDefault(num,0)+1);
+					// D일 때
 				}else {
+				// 비어있으면 넘기기
 					if(tm.isEmpty()) continue;
-					else if(num==1) {
-						// treemap의 가장 큰 값 -1
-						tm.put(tm.lastKey(), tm.get(tm.lastKey())-1);
-						// treemap의 가장 큰 값이 0이면 제거
-						if(tm.get(tm.lastKey())==0) tm.pollLastEntry();
-					}
-					else {
-						// treemap의 가장 큰 값 -1
-						tm.put(tm.firstKey(), tm.get(tm.firstKey())-1);
-						// treemap의 가장 큰 값이 0이면 제거
-						if(tm.get(tm.firstKey())==0) tm.pollFirstEntry();
+					// 최댓값 제거할 지, 최솟값 제거할 지
+					int targetKey = (num == 1) ? tm.lastKey() : tm.firstKey();
+					int count = tm.get(targetKey);
+					
+					if (count == 1) {
+					    tm.remove(targetKey);
+					} else {
+					    tm.put(targetKey, count - 1);
 					}
 				}	
 			}
