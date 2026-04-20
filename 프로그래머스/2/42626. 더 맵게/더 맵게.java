@@ -1,29 +1,31 @@
 import java.util.*;
+
 class Solution {
     public int solution(int[] scoville, int K) {
         int answer = 0;
-        // 우선순위 큐 선언
-        Queue<Integer> pq = new PriorityQueue<>();
-        // 큐에 음식 넣기
-        for(int i=0; i<scoville.length; i++){
-            pq.add(scoville[i]);
+        
+        PriorityQueue<Integer> foods = new PriorityQueue<>();
+        for (int food : scoville) {
+            foods.add(food);
         }
-        // 만들 지 못할 경우를 처리할 boolean
-        boolean possible = true;
-        // 제일 작은 스코빌 지수가 K이상이 될때까지 반복
-        while(pq.peek()<K){
-            if(pq.size()<2){
-                possible = false;
-                break;
+        
+        // 가장 작은 값이 K보다 작을 동안 반복
+        while (foods.peek() < K) {
+            // 섞으려면 최소 2개의 음식이 필요함
+            if (foods.size() < 2) {
+                return -1; 
             }
-            else{
-                int min1 = pq.poll();
-                int min2 = pq.poll();
-                pq.add(min1+min2*2);
-                answer++;
-            }
+            
+            int first = foods.poll();
+            int second = foods.poll();
+            
+            // 섞기 공식 적용
+            int mixed = first + (second * 2);
+            foods.add(mixed);
+            
+            answer++; // 섞은 횟수 증가
         }
-        if(!possible) answer=-1;
+        
         return answer;
     }
 }
