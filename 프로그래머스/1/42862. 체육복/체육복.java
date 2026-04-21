@@ -1,31 +1,33 @@
 import java.util.*;
+
 class Solution {
     public int solution(int n, int[] lost, int[] reserve) {
-        int answer = 0;
-        // lost배열과 reserve배열 중복제거를 위해 set에 저장
-        Set<Integer> l = new HashSet<>();
-        loop1:for(int temp : lost){
-            for(int num : reserve){
-                if(temp == num) continue loop1;
-            }
-            l.add(temp);
-        }
-        Set<Integer> r = new HashSet<>();
-        loop2:for(int temp : reserve){
-            for(int num : lost){
-                if(temp == num) continue loop2;
-            }
-            r.add(temp);
-        }
         
+        Arrays.sort(lost);
+        Arrays.sort(reserve);
+
+        Set<Integer> s = new HashSet<>();
+        for (int l : lost) s.add(l);
+
+        // 자기꺼 먼저 
+        List<Integer> l = new ArrayList<>();
+        for (int r : reserve) {
+            if (s.contains(r)) {
+                s.remove(r); 
+            } else {
+                l.add(r);    
+            }
+        }
+
         // 빌려주기
-        for(int temp : r){
-            if(l.contains(temp-1)) l.remove(temp-1);
-            else if(l.contains(temp+1)) l.remove(temp+1);
+        for (int r : l) {
+            if (s.contains(r - 1)) {
+                s.remove(r - 1);
+            } else if (s.contains(r + 1)) {
+                s.remove(r + 1);
+            }
         }
-        
-        answer=n-l.size();
-        
-        return answer;
+
+        return n - s.size();
     }
 }
